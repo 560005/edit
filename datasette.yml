@@ -1,18 +1,24 @@
 permissions:
   debug-menu:
-    id: "*"
-  view-instance:
-    id: "*"
-  view-database:
-    id: "*"
-  view-table:
-    id: "*"
-  view-query:
-    id: "*"
+    id: kitallis
+  view-instance: true
+  view-database: true
+  view-table: true
+  view-query: true
 
 databases:
   data:
     permissions:
+      insert-row:
+        id:
+          - kitallis
+          - nid90
+      update-row:
+        id: kitallis
+      delete-row:
+        id: kitallis
+      edit-schema:
+        id: kitallis
       create-table:
         id: kitallis
       drop-table:

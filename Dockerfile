@@ -12,8 +12,9 @@ RUN pip install "datasette>=1.0a14"
 
 # Install plugins using datasette install
 RUN datasette install datasette-edit-schema
-RUN datasette install datasette-auth-github
+RUN datasette install datasette-auth-passwords
 RUN datasette install datasette-search-all
+RUN datasette install datasette-write-ui
 
 # Create a directory for the database
 RUN mkdir -p /app/data

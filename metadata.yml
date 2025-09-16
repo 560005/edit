@@ -2,28 +2,27 @@ title: East Bangalore Directory
 description: Community-maintained listings of local services, people, and places.
 
 plugins:
-  datasette-auth-github:
-    client_id:
-      $env: GITHUB_CLIENT_ID
-    client_secret:
-      $env: GITHUB_CLIENT_SECRET
-    restrict_to_users:
-      - kitallis
-      - nid90
   datasette-edit-schema: {}
   datasette-insert: {}
 
 databases:
   data:
     tables:
+      categories:
+        label_column: name
+        description: Structured categories for listings (e.g. plumber, doctor).
       listings:
         label_column: name
         description: Directory of all local listings (services, people, shops, etc).
-      categories:
-        label_column: name
-        description: Structured categories for listings (e.g. plumber, doctor, tutor).
+      listing_tags:
+        description: Join table mapping listings to tags.
       tags:
         label_column: name
         description: Reusable descriptive tags (e.g. 24x7, emergency, home-visit).
-      listing_tags:
-        description: Join table mapping listings to tags.
+
+plugins:
+  datasette-auth-passwords:
+    kitallis_password_hash:
+      $env: KITALLIS_PASSWORD_HASH
+    nid90_password_hash:
+      $env: NID90_PASSWORD_HASH
