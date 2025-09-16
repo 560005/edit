@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DB_PATH="${DATASETTE_DB:-data.db}"
+
+# Ensure migrations tracking table exists
+sqlite3 "$DB_PATH" <<'EOF'
+CREATE TABLE IF NOT EXISTS schema_migrations (filename TEXT PRIMARY KEY);
+EOF
+
+# Apply all migrations in order
+for f in migrations/*.sql; do
+  if ! sqlite3 "$DB_PATH" "SELECT 1 FROM schema_migrations WHERE filename='$(basename "$f")'" | grep -q 1; then
+    echo "Applying migration: $f"
+    sqlite3 "$DB_PATH" < "$f"
+    sqlite3 "$DB_PATH" "INSERT INTO schema_migrations (filename) VALUES ('$(basename "$f")')"
+  else
+    echo "Skipping already applied migration: $f"
+  fi
+done

@@ -3,7 +3,8 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install datasette and plugins
-RUN pip install datasette \
+RUN pip install \
+  datasette \
   datasette-publish-fly \
   datasette-edit-schema \
   datasette-auth-github \
@@ -12,13 +13,13 @@ RUN pip install datasette \
 # Create a directory for the database
 RUN mkdir -p /app/data
 
-# Copy configuration and any existing databases
+# Copy project files (code, config, migrations, scripts)
 COPY . .
 
-# Create metadata file if it doesn't exist
-RUN touch metadata.json
+# Ensure scripts are executable
+RUN chmod +x migrate_db
 
 EXPOSE 8000
 
-# Start datasette with metadata
-CMD ["datasette", ".", "--host", "0.0.0.0", "--port", "8000", "--cors", "--metadata", "metadata.json"]
+# Run migrations, then launch Datasette
+CMD ["sh", "-c", "./migrate.sh && datasette data.db --host 0.0.0.0 --port 8000 --cors --metadata metadata.json"]
