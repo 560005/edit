@@ -22,9 +22,9 @@ RUN mkdir -p /app/data
 COPY . .
 
 # Ensure scripts are executable
-RUN chmod +x migrate_db
+RUN chmod +x migrate_database
 
 EXPOSE 8000
 
 # Run migrations, then launch Datasette
-CMD ["sh", "-c", "./migrate_db && datasette data.db --host 0.0.0.0 --port 8000 --cors --metadata metadata.json"]
+CMD ["sh", "-c", "./migrate_database && datasette data.db --host 0.0.0.0 --port 8000 --cors --metadata metadata.yml"]
