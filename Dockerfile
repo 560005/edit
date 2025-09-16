@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
 # Install datasette first
-RUN pip install datasette
+RUN pip install "datasette>=1.0a9"
 
 # Install plugins using datasette install
 RUN datasette install datasette-edit-schema
