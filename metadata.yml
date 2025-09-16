@@ -28,21 +28,21 @@ databases:
       listing_tags:
         description: Join table mapping listings to tags.
 
-  permissions:
-    debug-menu: true
-    view-instance: true
-    view-database: true
-    view-table: true
-    view-query: true
-    edit-schema:
-      - kitallis
-      - nid90
-    create-table:
-      - kitallis
-      - nid90
-    drop-table:
-      - kitallis
-      - nid90
-    alter-table:
-      - kitallis
-      - nid90
+permissions:
+  debug-menu: true
+  view-instance: true
+  view-database: true
+  view-table: true
+  view-query: true
+  edit-schema:
+    - kitallis
+    - nid90
+  create-table:
+    - kitallis
+    - nid90
+  drop-table:
+    - kitallis
+    - nid90
+  alter-table:
+    - kitallis
+    - nid90
