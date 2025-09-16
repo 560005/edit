@@ -1,0 +1,21 @@
+permissions:
+  debug-menu:
+    id: "*"
+  view-instance:
+    id: "*"
+  view-database:
+    id: "*"
+  view-table:
+    id: "*"
+  view-query:
+    id: "*"
+
+databases:
+  data:
+    permissions:
+      create-table:
+        id: kitallis
+      drop-table:
+        id: kitallis
+      alter-table:
+        id: kitallis
