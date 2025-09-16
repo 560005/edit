@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 WORKDIR /app
 
@@ -7,13 +7,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   sqlite3 \
   && rm -rf /var/lib/apt/lists/*
 
-# Install datasette and plugins
-RUN pip install \
-  datasette \
-  datasette-publish-fly \
-  datasette-edit-schema \
-  datasette-auth-github \
-  datasette-insert
+# Install datasette first
+RUN pip install datasette
+
+# Install plugins using datasette install
+RUN datasette install datasette-edit-schema
+RUN datasette install datasette-auth-github
+RUN datasette install datasette-insert
 
 # Create a directory for the database
 RUN mkdir -p /app/data
