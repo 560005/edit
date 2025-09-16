@@ -14,6 +14,7 @@ RUN pip install datasette
 RUN datasette install datasette-edit-schema
 RUN datasette install datasette-auth-github
 RUN datasette install datasette-insert
+RUN datasette install datasette-edit-tables
 
 # Create a directory for the database
 RUN mkdir -p /app/data
