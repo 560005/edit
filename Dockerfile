@@ -22,4 +22,4 @@ RUN chmod +x migrate_db
 EXPOSE 8000
 
 # Run migrations, then launch Datasette
-CMD ["sh", "-c", "./migrate.sh && datasette data.db --host 0.0.0.0 --port 8000 --cors --metadata metadata.json"]
+CMD ["sh", "-c", "./migrate_db && datasette data.db --host 0.0.0.0 --port 8000 --cors --metadata metadata.json"]
