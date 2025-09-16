@@ -27,4 +27,4 @@ RUN chmod +x migrate_database
 EXPOSE 8000
 
 # Run migrations, then launch Datasette
-CMD ["sh", "-c", "./migrate_database && datasette data.db --host 0.0.0.0 --port 8000 --cors --metadata metadata.yml --config datasette.yaml"]
+CMD ["sh", "-c", "./migrate_database && datasette data.db --host 0.0.0.0 --port 8000 --cors --metadata metadata.yml --config datasette.yml"]
