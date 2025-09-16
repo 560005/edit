@@ -1,0 +1,24 @@
+{
+  "title": "56005 Datasette",
+  "description": "View / edit the 56005 dataset",
+  "plugins": {
+    "datasette-auth-github": {
+      "client_id": {"$env": "GITHUB_CLIENT_ID"},
+      "client_secret": {"$env": "GITHUB_CLIENT_SECRET"},
+      "restrict_to_users": [
+        "kitallis",
+        "nid90"
+      ]
+    },
+    "datasette-edit-schema": {},
+    "datasette-insert": {}
+  },
+  "permissions": {
+    "view-instance": ["root"],
+    "view-database": ["root"],
+    "view-table": ["root"],
+    "edit-schema": ["root"],
+    "insert-row": ["root"],
+    "delete-row": ["root"],
+    "update-row": ["root"]
+  }

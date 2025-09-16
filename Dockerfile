@@ -2,12 +2,23 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install datasette and any plugins you want
-RUN pip install datasette datasette-publish-fly
+# Install datasette and plugins
+RUN pip install datasette \
+  datasette-publish-fly \
+  datasette-edit-schema \
+  datasette-auth-github \
+  datasette-insert
 
-# Copy your data (if you have any)
-# COPY your-database.db /app/
+# Create a directory for the database
+RUN mkdir -p /app/data
+
+# Copy configuration and any existing databases
+COPY . .
+
+# Create metadata file if it doesn't exist
+RUN touch metadata.json
 
 EXPOSE 8000
 
-CMD ["datasette", ".", "--host", "0.0.0.0", "--port", "8000"]
+# Start datasette with metadata
+CMD ["datasette", ".", "--host", "0.0.0.0", "--port", "8000", "--cors", "--metadata", "metadata.json"]
