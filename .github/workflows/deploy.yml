@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Babashka + sqlite-utils
+        env:
+          BABASHKA_VERSION: 1.12.208
+        run: |
+          curl -sLO https://github.com/babashka/babashka/releases/download/v{{BABASHKA_VERSION}}/babashka-{{BABASHKA_VERSION}}-linux-amd64.tar.gz
+          tar -xzf babashka-{{BABASHKA_VERSION}}-linux-amd64.tar.gz
+          sudo mv bb /usr/local/bin/
+          pip install sqlite-utils
+
+      - name: Build DB from schema + CSV
+        run: ./bin/build-db
+
+      - name: Verify DB exists
+        run: test -f data.db
+
+      - name: Set up Fly CLI
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy app to Fly
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

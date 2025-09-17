@@ -1,0 +1,23 @@
+#!/usr/bin/env bb
+;; Export all tables from the source db to CSV files
+;; This ensures that the syncing is bi-directional
+;; Edits made directly on the source db will be synced in CSV files in this repo
+;; The CSV files can then be synced back to the source DB if there are any changes
+
+(require '[babashka.curl :as curl]
+         '[clojure.java.io :as io])
+
+(def base-url "https://edit.560005.town/data")
+(def tables ["categories" "listings" "tags" "listing_tags"])
+(def data-dir "data")
+(defn log [msg] (locking *out* (println msg)))
+
+(defn fetch-and-save [table]
+  (let [url (str base-url "/" table ".csv")
+        resp (curl/get url {:throw true})
+        out-file (io/file data-dir (str table ".csv"))
+        out-file-path (.getPath out-file)]
+    (spit out-file (:body resp))
+    (log (format "✔ Exported '%s' to '%s'" table out-file-path))))
+
+(doall (pmap fetch-and-save tables))

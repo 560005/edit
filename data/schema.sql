@@ -5,8 +5,7 @@ CREATE TABLE IF NOT EXISTS categories (
 );
 
 CREATE TABLE IF NOT EXISTS tags (
-  id INTEGER PRIMARY KEY,
-  name TEXT UNIQUE NOT NULL -- e.g. "24x7", "Emergency", "Home Visit"
+  name TEXT PRIMARY KEY -- e.g. "24x7", "Emergency", "Home Visit"
 );
 
 CREATE TABLE IF NOT EXISTS listings (
@@ -24,7 +23,7 @@ CREATE TABLE IF NOT EXISTS listings (
 );
 
 CREATE TABLE IF NOT EXISTS listing_tags (
-  listing_id INTEGER REFERENCES listings(id),
-  tag_id INTEGER REFERENCES tags(id),
-  PRIMARY KEY(listing_id, tag_id)
+  listing_id INTEGER,
+  tag_name TEXT,
+  PRIMARY KEY(listing_id, tag_name)
 );

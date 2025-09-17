@@ -1,0 +1,28 @@
+#!/usr/bin/env bb
+;; Export all CSV files to source DB tables
+;; This can be run whenever there's an edit to any of the files
+
+(require '[babashka.process :refer [shell]])
+
+(def db "data.db")
+(defn log [msg] (locking *out* (println msg)))
+
+(defn INSERT-args [db table csv pk]
+  (cond-> ["sqlite-utils" "insert" db table csv "--csv" "--replace"]
+    pk (conj (str "--pk=" pk))))
+
+(defn csv->db [table csv & {:keys [pk]}]
+  (log (format "⏳ Importing %s from %s..." table csv))
+  (let [{:keys [exit]} (apply shell (INSERT-args db table csv pk))]
+    (when-not (zero? exit)
+      (log (format "⚠ Failed importing %s" table))
+      (System/exit 1))))
+
+(shell "rm -f" db)
+(log "⏳ Applying schema...")
+(shell "sqlite3" db ".read data/schema.sql")
+(csv->db "categories" "data/categories.csv" :pk "slug")
+(csv->db "tags" "data/tags.csv" :pk "name")
+(csv->db "listings" "data/listings.csv" :pk "id")
+(csv->db "listing_tags" "data/listing_tags.csv")
+(log "✔ Database has successfully built")
