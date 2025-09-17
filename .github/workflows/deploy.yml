@@ -20,8 +20,7 @@ jobs:
           BABASHKA_VERSION: 1.12.208
         run: |
           curl -sLO https://github.com/babashka/babashka/releases/download/v${{env.BABASHKA_VERSION}}/babashka-${{env.BABASHKA_VERSION}}-linux-amd64.tar.gz
-          tar -xzf babashka-${{env.BABASHKA_VERSION}}-linux-amd64.tar.gz
-          sudo mv bb /usr/local/bin/
+          sudo tar -xzf babashka-1.12.208-linux-amd64.tar.gz -C /usr/local/bin --strip-components=0
           pip install sqlite-utils
 
       - name: Build DB from schema + CSV

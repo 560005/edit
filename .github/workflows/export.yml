@@ -17,13 +17,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Babashka + sqlite-utils
+      - name: Install Babashka
         env:
           BABASHKA_VERSION: 1.12.208
         run: |
           curl -sLO https://github.com/babashka/babashka/releases/download/v${{env.BABASHKA_VERSION}}/babashka-${{env.BABASHKA_VERSION}}-linux-amd64.tar.gz
-          tar -xzf babashka-${{env.BABASHKA_VERSION}}-linux-amd64.tar.gz
-          sudo mv bb /usr/local/bin/
+          sudo tar -xzf babashka-1.12.208-linux-amd64.tar.gz -C /usr/local/bin --strip-components=0
 
       - name: Run export script
         run: ./bin/export-csv
@@ -31,4 +30,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v6
         with:
           file_pattern: "data/*.csv"
-          commit_message: "chore: nightly CSV export"
+          commit_message: "chore: automatic csv export"

@@ -25,4 +25,4 @@
 (csv->db "tags" "data/tags.csv" :pk "name")
 (csv->db "listings" "data/listings.csv" :pk "id")
 (csv->db "listing_tags" "data/listing_tags.csv")
-(log "✔ Database has successfully built")
+(log "✔ Database was built successfully")
