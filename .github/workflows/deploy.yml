@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "data/*.csv"
+      - "Dockerfile"
     branches: [ main ]
   workflow_dispatch:
 
@@ -20,7 +21,8 @@ jobs:
           BABASHKA_VERSION: 1.12.208
         run: |
           curl -sLO https://github.com/babashka/babashka/releases/download/v${{env.BABASHKA_VERSION}}/babashka-${{env.BABASHKA_VERSION}}-linux-amd64.tar.gz
-          sudo tar -xzf babashka-1.12.208-linux-amd64.tar.gz -C /usr/local/bin --strip-components=0
+          sudo tar -xzf babashka-${{env.BABASHKA_VERSION}}-linux-amd64.tar.gz -C /usr/local/bin --strip-components=0
+          rm -f babashka-${{env.BABASHKA_VERSION}}-linux-amd64.tar.gz
           pip install sqlite-utils
 
       - name: Build DB from schema + CSV
