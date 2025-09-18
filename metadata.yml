@@ -1,9 +1,17 @@
 title: East Bangalore Directory
 description: Community-maintained listings of local services, people, and places.
+databases:
+  data:
+    title: database
+    sqlite_pragmas:
+      synchronous: NORMAL
+      mmap_size: 134217728
+      cache_size: 2000
+      busy_timeout: 5000
 
 plugins:
-  datasette-edit-schema: {}
   datasette-insert: {}
+  datasette-edit-schema: {}
 
 databases:
   data:
@@ -14,15 +22,10 @@ databases:
       listings:
         label_column: name
         description: Directory of all local listings (services, people, shops, etc).
-      listing_tags:
-        description: Join table mapping listings to tags.
-      tags:
-        label_column: name
-        description: Reusable descriptive tags (e.g. 24x7, emergency, home-visit).
 
 plugins:
   datasette-auth-passwords:
-    kitallis_password_hash:
-      $env: KITALLIS_PASSWORD_HASH
     nid90_password_hash:
       $env: NID90_PASSWORD_HASH
+    kitallis_password_hash:
+      $env: KITALLIS_PASSWORD_HASH

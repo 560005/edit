@@ -1,1 +1,3 @@
-id,name,category_id,description,phone,address,latitude,longitude,created_at,updated_at,verified
+id,name,category_id,description,phone,address,latitude,longitude,geohash,created_at,updated_at,verified,tags
+1,Iqbal,1,"electrician-first handyperson who can do a lot of odd-jobs like drilling, plumbing,electrical work etc.",+919880990907,,,,,,,1,"[""electrician"",""plumber"",""handyman"",""drilling""]"
+2,Shanti,2,"quiet dog that sits next to the cobbler, very friendly",,,13.003084385772276,77.61653899972441,tdr1ypn7,,,1,"[""dog"",""street dog"",""animal"",""stray""]"

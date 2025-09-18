@@ -8,7 +8,7 @@
          '[clojure.java.io :as io])
 
 (def base-url "https://edit.560005.town/data")
-(def tables ["categories" "listings" "tags" "listing_tags"])
+(def tables ["categories" "listings"])
 (def data-dir "data")
 (defn log [msg] (locking *out* (println msg)))
 
