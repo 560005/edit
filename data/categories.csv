@@ -1,3 +1,25 @@
 id,slug,name
-1,services,Services
-2,animals,Animals
+1,auto-services,Auto Services
+2,beauty-personal-care,Beauty & Personal Care
+3,community-events,Community & Events
+4,delivery-services,Delivery Services
+5,education-training,Education & Training
+6,food-beverage,Food & Beverage
+7,government-services,Government Services
+8,healthcare,Healthcare
+9,home-repair-maintenance,Home Repair & Maintenance
+10,home-services,Home Services
+11,laundry-services,Laundry Services
+12,moving-logistics,Moving & Logistics
+13,pet-services,Pet Services
+14,printing-photography,Printing & Photography
+15,professional-services,Professional Services
+16,real-estate,Real Estate
+17,recreation-sports,Recreation & Sports
+18,rental-services,Rental Services
+19,repair-services,Repair Services
+20,retail,Retail
+21,tailoring,Tailoring
+22,transportation,Transportation
+23,waste-recycling,Waste & Recycling
+24,animals,Animals

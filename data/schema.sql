@@ -15,7 +15,9 @@ CREATE TABLE IF NOT EXISTS listings (
   longitude REAL,
   geohash TEXT,
   tags TEXT, -- JSON array of tags
+  maps_link TEXT,
+  link TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-  verified BOOLEAN DEFAULT 0
+  verified_by TEXT
 );
