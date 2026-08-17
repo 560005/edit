@@ -45,10 +45,3 @@ jobs:
             sqlite3 data.db .dump | grep -vE '^(PRAGMA|BEGIN TRANSACTION;|COMMIT;)'
           } > load.sql
           npx --yes wrangler@4 d1 execute 560005-town --remote --file=load.sql -y
-
-      - name: Trigger home repo deploy
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.GHA_DISPATCH_TOKEN }}
-          repository: 560005/home
-          event-type: deploy
