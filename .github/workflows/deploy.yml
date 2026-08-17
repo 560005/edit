@@ -45,3 +45,11 @@ jobs:
             sqlite3 data.db .dump | grep -vE '^(PRAGMA|BEGIN TRANSACTION;|COMMIT;)'
           } > load.sql
           npx --yes wrangler@4 d1 execute 560005-town --remote --file=load.sql -y
+
+      - name: Trigger home rebuild
+        # Cascade: tell 560005/home to rebuild from the freshly-loaded D1 data.
+        # Needs GHA_DISPATCH_TOKEN = fine-grained PAT with access to 560005/home
+        # and Contents: Read and write. home listens on repository_dispatch(deploy).
+        env:
+          GH_TOKEN: ${{ secrets.GHA_DISPATCH_TOKEN }}
+        run: gh api repos/560005/home/dispatches -f event_type=deploy
