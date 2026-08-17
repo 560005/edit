@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "data/*.csv"
-      - "Dockerfile"
+      - ".github/workflows/deploy.yml"
     branches: [ main ]
   workflow_dispatch:
 
@@ -31,13 +31,20 @@ jobs:
       - name: Verify DB exists
         run: test -f data.db
 
-      - name: Set up Fly CLI
-        uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy app to Fly
-        run: flyctl deploy --remote-only
+      - name: Load data into Cloudflare D1
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # Rebuild the D1 tables from the freshly-built SQLite DB. DROP first so
+          # the load is a full replace; strip PRAGMA/transaction lines that D1's
+          # query endpoint wraps itself.
+          {
+            echo "DROP TABLE IF EXISTS listings;"
+            echo "DROP TABLE IF EXISTS categories;"
+            sqlite3 data.db .dump | grep -vE '^(PRAGMA|BEGIN TRANSACTION;|COMMIT;)'
+          } > load.sql
+          npx --yes wrangler@4 d1 execute 560005-town --remote --file=load.sql -y
 
       - name: Trigger home repo deploy
         uses: peter-evans/repository-dispatch@v3
